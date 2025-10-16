@@ -8,4 +8,4 @@ class Emprestimo:
     id_livro: int
     id_leitor: int
     data_retirada: datetime
-    data_devolucao: datetime    
+    data_devolucao: datetime
