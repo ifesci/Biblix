@@ -1,147 +1,154 @@
 {% extends "base_publica.html" %}
 
-{% block titulo %}Sobre - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Sobre{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<div class="row mb-3">
-    <div class="col-12">
-        <div class="text-center">
-            <h1 class="display-4 fw-bold text-primary mb-3">Sobre o Projeto {{ APP_NAME }}</h1>
-            <p class="lead text-muted mb-4">
-                Projeto Acadêmico desenvolvido no Ifes Campus Cachoeiro de Itapemirim
-            </p>
-            <hr class="mt-4 mx-auto" style="max-width: 200px;">
+<div class="container">
+    <!-- Hero Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4 mb-2">Sobre o Projeto {{ APP_NAME }}</h1>
+            <p class="text-muted">Projeto Acadêmico desenvolvido no Ifes Campus Cachoeiro de Itapemirim</p>
+            <hr>
         </div>
     </div>
-</div>
 
-<!-- Informações do Projeto -->
-<div class="row mb-5">
-    <div class="col-lg-8 mx-auto">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4">
-                <h2 class="h4 card-title text-primary mb-4">
-                    <i class="bi bi-mortarboard-fill me-2"></i>Informações Acadêmicas
-                </h2>
-                <p class="text-muted lead">
-                    Este projeto foi desenvolvido no <strong>Instituto Federal do Espírito Santo</strong>, Campus <strong>Cachoeiro de Itapemirim</strong>, como parte da disciplina <strong>Projeto Integrador</strong> do curso <strong>Técnico em Informática para Internet</strong>. O período de desenvolvimento compreende os meses de <strong>agosto a dezembro de 2025</strong>.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Stack Tecnológica -->
-<div class="row mb-5">
-    <div class="col-lg-8 mx-auto">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4">
-                <h2 class="h4 card-title text-primary mb-4">
-                    <i class="bi bi-stack me-2"></i>Stack Tecnológica
-                </h2>
-                <div class="d-flex flex-wrap gap-2">
-                    <span class="badge bg-primary fs-6 py-2 px-3">Python 3.10+</span>
-                    <span class="badge bg-success fs-6 py-2 px-3">FastAPI</span>
-                    <span class="badge bg-info fs-6 py-2 px-3">Jinja2</span>
-                    <span class="badge bg-primary fs-6 py-2 px-3">Bootstrap 5.3.8</span>
-                    <span class="badge bg-secondary fs-6 py-2 px-3">SQLite</span>
-                    <span class="badge bg-warning text-dark fs-6 py-2 px-3">Pydantic</span>
-                    <span class="badge bg-danger fs-6 py-2 px-3">Bcrypt</span>
-                    <span class="badge bg-dark fs-6 py-2 px-3">Pillow</span>
-                    <span class="badge bg-info fs-6 py-2 px-3">Resend</span>
-                    <span class="badge bg-success fs-6 py-2 px-3">Pytest</span>
+    <!-- Informações do Projeto -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title text-primary mb-4">
+                        <i class="bi bi-mortarboard-fill me-2"></i>Informações Acadêmicas
+                    </h4>
+                    <p class="text-muted">
+                        Este projeto foi desenvolvido no <strong>Instituto Federal do Espírito Santo</strong>, Campus
+                        <strong>Cachoeiro de Itapemirim</strong>, como parte da disciplina <strong>Projeto
+                            Integrador</strong> do curso <strong>Técnico em Informática para Internet</strong>. O período de
+                        desenvolvimento compreende os meses de <strong>agosto a dezembro de 2025</strong>.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Equipe -->
-<div class="row mb-3">
-    <div class="col-12">
-        <h2 class="h3 text-center text-primary mb-4">
-            <i class="bi bi-people-fill me-2"></i>Equipe do Projeto
-        </h2>
-    </div>
-</div>
-
-<!-- Alunos -->
-<div class="row g-4 mb-4">
-    <div class="col-sm-6 col-lg-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body text-center p-4">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3">
-                    <img src="/static/img/site/aluno1.jpg" alt="Aluno 1" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
+    <!-- Stack Tecnológica -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title text-primary mb-4">
+                        <i class="bi bi-stack me-2"></i>Stack Tecnológica
+                    </h4>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-primary fs-6 py-2 px-3">Python 3.10+</span>
+                        <span class="badge bg-success fs-6 py-2 px-3">FastAPI</span>
+                        <span class="badge bg-info fs-6 py-2 px-3">Jinja2</span>
+                        <span class="badge bg-primary fs-6 py-2 px-3">Bootstrap 5.3.8</span>
+                        <span class="badge bg-secondary fs-6 py-2 px-3">SQLite</span>
+                        <span class="badge bg-warning text-dark fs-6 py-2 px-3">Pydantic</span>
+                        <span class="badge bg-danger fs-6 py-2 px-3">Bcrypt</span>
+                        <span class="badge bg-dark fs-6 py-2 px-3">Pillow</span>
+                        <span class="badge bg-info fs-6 py-2 px-3">Resend</span>
+                        <span class="badge bg-success fs-6 py-2 px-3">Pytest</span>
+                    </div>
                 </div>
-                <h4 class="h6 card-title mb-2">Aluno 1</h4>
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-code-slash me-1"></i>
-                    Desenvolvedor
-                </p>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body text-center p-4">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3">
-                    <img src="/static/img/site/aluno2.jpg" alt="Aluno 2" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
-                </div>
-                <h4 class="h6 card-title mb-2">Aluno 2</h4>
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-code-slash me-1"></i>
-                    Desenvolvedor
-                </p>
-            </div>
-        </div>
-    </div>
+    <!-- Equipe -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title text-primary mb-4">
+                        <i class="bi bi-people-fill me-2"></i>Equipe do Projeto
+                    </h4>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body text-center p-4">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3">
-                    <img src="/static/img/site/aluno3.jpg" alt="Aluno 3" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
-                </div>
-                <h4 class="h6 card-title mb-2">Aluno 3</h4>
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-code-slash me-1"></i>
-                    Desenvolvedor
-                </p>
-            </div>
-        </div>
-    </div>
+                    <!-- Alunos -->
+                    <div class="row g-4 mb-4 row-cols-5">
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center mb-3">
+                                        <img src="/static/img/site/aluno1.jpg" alt="Aluno 1" class="rounded-circle object-fit-cover"
+                                            width="80" height="80">
+                                    </div>
+                                    <h4 class="h6 card-title mb-2">Aluno 1</h4>
+                                    <p class="text-muted small mb-0">
+                                        <i class="bi bi-code-slash me-1"></i>
+                                        Desenvolvedor
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body text-center p-4">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3">
-                    <img src="/static/img/site/aluno4.jpg" alt="Aluno 4" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
-                </div>
-                <h4 class="h6 card-title mb-2">Aluno 4</h4>
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-code-slash me-1"></i>
-                    Desenvolvedor
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center mb-3">
+                                        <img src="/static/img/site/aluno2.jpg" alt="Aluno 2" class="rounded-circle object-fit-cover"
+                                            width="80" height="80">
+                                    </div>
+                                    <h4 class="h6 card-title mb-2">Aluno 2</h4>
+                                    <p class="text-muted small mb-0">
+                                        <i class="bi bi-code-slash me-1"></i>
+                                        Desenvolvedor
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- Professor -->
-<div class="row mb-5">
-    <div class="col-lg-4 mx-auto">
-        <div class="card shadow-sm">
-            <div class="card-body text-center p-4">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3">
-                    <img src="/static/img/site/maroquio.jpg" alt="Professor Ricardo Maroquio" class="rounded-circle" style="width: 70px; height: 70px; object-fit: cover;">
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center mb-3">
+                                        <img src="/static/img/site/aluno3.jpg" alt="Aluno 3" class="rounded-circle object-fit-cover"
+                                            width="80" height="80">
+                                    </div>
+                                    <h4 class="h6 card-title mb-2">Aluno 3</h4>
+                                    <p class="text-muted small mb-0">
+                                        <i class="bi bi-code-slash me-1"></i>
+                                        Desenvolvedor
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center mb-3">
+                                        <img src="/static/img/site/aluno4.jpg" alt="Aluno 4" class="rounded-circle object-fit-cover"
+                                            width="80" height="80">
+                                    </div>
+                                    <h4 class="h6 card-title mb-2">Aluno 4</h4>
+                                    <p class="text-muted small mb-0">
+                                        <i class="bi bi-code-slash me-1"></i>
+                                        Desenvolvedor
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center mb-3">
+                                        <img src="/static/img/site/maroquio.jpg" alt="Professor Ricardo Maroquio"
+                                            class="rounded-circle object-fit-cover" width="70" height="70">
+                                    </div>
+                                    <h4 class="h6 card-title mb-2">Prof. Ricardo Maroquio</h4>
+                                    <p class="text-muted small mb-0">
+                                        <i class="bi bi-mortarboard me-1"></i>
+                                        Professor Orientador
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h4 class="h6 card-title mb-2">Prof. Ricardo Maroquio</h4>
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-mortarboard me-1"></i>
-                    Professor Orientador
-                </p>
             </div>
         </div>
     </div>

@@ -34,7 +34,7 @@ class EmailService:
         }
 
         try:
-            email = resend.Emails.send(**params)  # type: ignore[arg-type]
+            email = resend.Emails.send(params)  # type: ignore[arg-type]
             logger.info(f"E-mail enviado para {para_email} - ID: {email.get('id', 'N/A')}")
             return True
         except Exception as e:

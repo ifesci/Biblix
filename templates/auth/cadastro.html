@@ -1,6 +1,7 @@
 {% extends "base_publica.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Cadastro - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Cadastro{% endblock %}
 
 {% block content %}
 <div class="d-flex flex-column flex-fill justify-content-center">
@@ -13,86 +14,38 @@
                     </h3>
 
                     <form method="POST" action="/cadastrar">
-                        <!-- Seleção de Perfil -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold text-center d-block mb-3">
-                                <i class="bi bi-person-badge"></i> Escolha seu perfil
-                            </label>
-                            <div class="row g-3">
-                                <div class="col-6">
-                                    <div class="perfil-card" id="perfil-cliente" data-perfil="Cliente">
-                                        <div class="perfil-card-content">
-                                            <i class="bi bi-cart3"></i>
-                                            <h5>Comprador</h5>
-                                            <p>Procuro produtos e serviços</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="perfil-card" id="perfil-vendedor" data-perfil="Vendedor">
-                                        <div class="perfil-card-content">
-                                            <i class="bi bi-shop"></i>
-                                            <h5>Vendedor</h5>
-                                            <p>Vendo produtos e serviços</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="perfil" name="perfil" value="{{ perfil or '' }}" required>
-                            <div id="perfil-error" class="invalid-feedback d-block" style="display: none !important;"></div>
-                        </div>
+                        {{ field(name='perfil', type='radio', radio_style='buttons', required=true,
+                                 options={'Cliente': 'Cliente', 'Vendedor': 'Vendedor'},
+                                 radio_icons={'Cliente': 'bi-cart3', 'Vendedor': 'bi-shop'}) }}
 
-                        <div class="mb-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="nome" name="nome" value="{{ nome or '' }}"
-                                    placeholder="Nome Completo" minlength="3" maxlength="100" required>
-                                <label for="nome">Nome Completo</label>
-                            </div>
-                        </div>
+                        {{ field(name='nome', label='Nome Completo', type='text', required=true,
+                                 attributes={'minlength': 3, 'maxlength': 100}) }}
 
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ email or '' }}"
-                                placeholder="E-mail" required>
-                            <label for="email">E-mail</label>
-                        </div>
+                        {{ field(name='email', label='E-mail', type='email', required=true) }}
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group">
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="senha" name="senha"
-                                            placeholder="Senha" minlength="8" required>
-                                        <label for="senha">Senha</label>
-                                    </div>
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        onclick="togglePassword('senha')">
-                                        <i class="bi bi-eye" id="icon_senha"></i>
-                                    </button>
-                                </div>
+                            <div class="col-md-6">
+                                {{ field(name='senha', label='Senha', type='password', required=true,
+                                         append_icon='bi-eye', append_button_onclick="togglePassword('senha')",
+                                         attributes={'minlength': 8}) }}
                             </div>
 
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group">
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha"
-                                            placeholder="Confirmar Senha" minlength="8" required>
-                                        <label for="confirmar_senha">Confirmar Senha</label>
-                                    </div>
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        onclick="togglePassword('confirmar_senha')">
-                                        <i class="bi bi-eye" id="icon_confirmar_senha"></i>
-                                    </button>
-                                </div>
+                            <div class="col-md-6">
+                                {{ field(name='confirmar_senha', label='Confirmar Senha', type='password', required=true,
+                                         append_icon='bi-eye', append_button_onclick="togglePassword('confirmar_senha')",
+                                         attributes={'minlength': 8}) }}
                             </div>
                         </div>
 
                         <!-- Indicador de força da senha -->
                         <div class="mb-3">
-                            <small class="text-muted">Força da senha:</small>
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">Força da senha:</small>
+                                <small id="senha-strength-text" class="text-muted"></small>
+                            </div>
                             <div class="progress">
                                 <div class="progress-bar" id="senha-strength" role="progressbar"></div>
                             </div>
-                            <small id="senha-strength-text" class="text-muted"></small>
                         </div>
 
                         <div id="senha-match" class="form-text mb-3"></div>
@@ -130,189 +83,10 @@
         </div>
     </div>
 </div>
-
-<style>
-    .perfil-card {
-        border: 3px solid #dee2e6;
-        border-radius: 12px;
-        padding: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-color: #fff;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .perfil-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.03) 100%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .perfil-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
-
-    .perfil-card:hover::before {
-        opacity: 1;
-    }
-
-    .perfil-card-content {
-        text-align: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    .perfil-card-content i {
-        font-size: 3.5rem;
-        margin-bottom: 15px;
-        display: block;
-        color: #6c757d;
-        transition: all 0.3s ease;
-    }
-
-    .perfil-card-content h5 {
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #495057;
-        transition: color 0.3s ease;
-    }
-
-    .perfil-card-content p {
-        margin-bottom: 0;
-        font-size: 0.85rem;
-        color: #6c757d;
-        transition: color 0.3s ease;
-    }
-
-    /* Estilo do card quando selecionado - Comprador/Cliente (Azul) */
-    #perfil-cliente.active {
-        border-color: #0d6efd;
-        background: linear-gradient(135deg, #e7f1ff 0%, #fff 100%);
-    }
-
-    #perfil-cliente.active .perfil-card-content i {
-        color: #0d6efd;
-        transform: scale(1.1);
-    }
-
-    #perfil-cliente.active .perfil-card-content h5 {
-        color: #0d6efd;
-    }
-
-    #perfil-cliente.active .perfil-card-content p {
-        color: #084298;
-    }
-
-    /* Estilo do card quando selecionado - Vendedor (Verde) */
-    #perfil-vendedor.active {
-        border-color: #198754;
-        background: linear-gradient(135deg, #e7f6ed 0%, #fff 100%);
-    }
-
-    #perfil-vendedor.active .perfil-card-content i {
-        color: #198754;
-        transform: scale(1.1);
-    }
-
-    #perfil-vendedor.active .perfil-card-content h5 {
-        color: #198754;
-    }
-
-    #perfil-vendedor.active .perfil-card-content p {
-        color: #0f5132;
-    }
-
-    /* Animação de pulso para indicar que precisa selecionar */
-    .perfil-card.pulse-animation {
-        animation: pulse 0.5s ease-in-out;
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-    }
-
-    /* Responsividade */
-    @media (max-width: 576px) {
-        .perfil-card-content i {
-            font-size: 2.5rem;
-        }
-
-        .perfil-card {
-            padding: 15px;
-        }
-
-        .perfil-card-content h5 {
-            font-size: 1rem;
-        }
-
-        .perfil-card-content p {
-            font-size: 0.75rem;
-        }
-    }
-</style>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    // ========== CONTROLE DE SELEÇÃO DE PERFIL ==========
-    const perfilCards = document.querySelectorAll('.perfil-card');
-    const perfilInput = document.getElementById('perfil');
-    const perfilError = document.getElementById('perfil-error');
-
-    // Função para selecionar um perfil
-    function selecionarPerfil(card) {
-        // Remove a classe active de todos os cards
-        perfilCards.forEach(c => c.classList.remove('active'));
-
-        // Adiciona a classe active no card clicado
-        card.classList.add('active');
-
-        // Atualiza o valor do input hidden
-        const perfilValue = card.getAttribute('data-perfil');
-        perfilInput.value = perfilValue;
-
-        // Remove mensagem de erro se houver
-        perfilError.style.display = 'none';
-
-        // Log para debug
-        console.log('Perfil selecionado:', perfilValue);
-    }
-
-    // Adiciona evento de clique em cada card
-    perfilCards.forEach(card => {
-        card.addEventListener('click', function() {
-            selecionarPerfil(this);
-        });
-    });
-
-    // Se já houver um perfil selecionado (após erro de validação), marca o card
-    window.addEventListener('DOMContentLoaded', function() {
-        const perfilPreSelecionado = perfilInput.value;
-        if (perfilPreSelecionado) {
-            perfilCards.forEach(card => {
-                if (card.getAttribute('data-perfil') === perfilPreSelecionado) {
-                    card.classList.add('active');
-                }
-            });
-        }
-    });
-
-    // ========== VALIDAÇÃO DO FORMULÁRIO ==========
-
     // Inicializar validador de senha
     const passwordValidator = new PasswordValidator({
         passwordFieldId: 'senha',
@@ -333,36 +107,9 @@
 
     // Validação do formulário
     document.querySelector('form').addEventListener('submit', function (e) {
-        let formValido = true;
-
-        // Validar se um perfil foi selecionado
-        if (!perfilInput.value) {
-            e.preventDefault();
-            perfilError.textContent = 'Por favor, escolha um perfil (Comprador ou Vendedor)';
-            perfilError.style.display = 'block';
-
-            // Adiciona animação de pulso nos cards
-            perfilCards.forEach(card => {
-                card.classList.add('pulse-animation');
-                setTimeout(() => card.classList.remove('pulse-animation'), 500);
-            });
-
-            // Scroll suave para o topo do formulário
-            document.querySelector('.perfil-card').scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-
-            formValido = false;
-        }
-
-        // Validar senha
         if (!passwordValidator.validateForm()) {
             e.preventDefault();
-            formValido = false;
         }
-
-        return formValido;
     });
 </script>
 {% endblock %}

@@ -1,16 +1,18 @@
+{% set erros = {} if not erros %}
+{% set dados = {} if not dados %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block titulo %}{{ APP_NAME }}{% endblock %}</title>
+    <title>{{ APP_NAME }} :: {% block titulo %}{% endblock %}</title>
 
-    <!-- Bootstrap 5.3.8 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS (local - permite troca de temas) -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS Customizado -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
 
     {% block head %}{% endblock %}
 </head>
@@ -37,6 +39,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/sobre">Sobre</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/examples">
+                            <i class="bi bi-code-square"></i> Exemplos
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Menu do Usuário (se logado) ou Botões de Login/Cadastro -->
@@ -47,10 +54,9 @@
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
                             <img src="/static/img/usuarios/{{ '%06d' % request.session.get('usuario_logado')['id'] }}.jpg"
                                  alt="Foto do usuário"
-                                 class="rounded-circle me-2"
+                                 class="rounded-circle me-2 object-fit-cover"
                                  width="32"
                                  height="32"
-                                 style="object-fit: cover;"
                                  onerror="this.src='/static/img/user.jpg'">
                             {{ request.session.get('usuario_logado')['nome'] }}
                         </a>
@@ -93,8 +99,8 @@
         </div>
     </nav>
 
-    <!-- Container para Toasts (top-right) -->
-    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <!-- Container para Toasts (bottom-right) -->
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-4 toast-offset"></div>
 
     <!-- Conteúdo Principal -->
     <main class="container d-flex flex-column flex-fill my-4">
@@ -127,6 +133,9 @@
 
     <!-- Script de Validação de Senha -->
     <script src="/static/js/password-validator.js"></script>
+
+    <!-- Script de Máscaras de Input -->
+    <script src="/static/js/input-mask.js"></script>
 
     {% block scripts %}{% endblock %}
 </body>

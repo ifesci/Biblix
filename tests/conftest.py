@@ -5,7 +5,6 @@ import pytest
 from fastapi.testclient import TestClient
 import os
 import tempfile
-from pathlib import Path
 from util.perfis import Perfil
 
 # Configurar banco de dados de teste ANTES de importar a aplicação

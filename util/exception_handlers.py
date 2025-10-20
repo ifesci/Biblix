@@ -1,5 +1,5 @@
 from fastapi import Request, status
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, Response
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from util.template_util import criar_templates
@@ -12,7 +12,7 @@ import traceback
 templates = criar_templates("templates")
 
 
-async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+async def http_exception_handler(request: Request, exc: StarletteHTTPException) -> Response:
     """
     Handler para exceções HTTP do Starlette/FastAPI
 
@@ -23,12 +23,24 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     """
     status_code = exc.status_code
 
-    # Log da exceção
-    logger.warning(
+    # Extensões de arquivos estáticos opcionais que não devem gerar warnings
+    STATIC_OPTIONAL_EXTENSIONS = ('.map', '.ico', '.woff', '.woff2', '.ttf', '.eot')
+
+    # Determinar nível de log baseado no tipo de recurso
+    path_lower = request.url.path.lower()
+    is_optional_static = status_code == 404 and path_lower.endswith(STATIC_OPTIONAL_EXTENSIONS)
+
+    # Log da exceção com nível apropriado
+    log_message = (
         f"HTTPException {status_code}: {exc.detail} - "
         f"Path: {request.url.path} - "
         f"IP: {request.client.host if request.client else 'unknown'}"
     )
+
+    if is_optional_static:
+        logger.debug(log_message)
+    else:
+        logger.warning(log_message)
 
     # 401 - Não autenticado
     if status_code == status.HTTP_401_UNAUTHORIZED:
@@ -77,7 +89,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     )
 
 
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
+async def validation_exception_handler(request: Request, exc: RequestValidationError) -> Response:
     """
     Handler para erros de validação do Pydantic
     Loga o erro e exibe mensagem amigável
@@ -128,7 +140,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
-async def generic_exception_handler(request: Request, exc: Exception):
+async def generic_exception_handler(request: Request, exc: Exception) -> Response:
     """
     Handler genérico para todas as exceções não tratadas
     Loga o erro completo e exibe página de erro amigável

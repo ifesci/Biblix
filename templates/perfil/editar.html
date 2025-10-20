@@ -1,59 +1,33 @@
 {% extends "base_privada.html" %}
+{% from "macros/form_fields.html" import field %}
 
 {% block titulo %}Editar Perfil{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <!-- Cabeçalho -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2><i class="bi bi-pencil-square"></i> Editar Perfil</h2>
-                <a href="/perfil/visualizar" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-left"></i> Voltar
-                </a>
             </div>
 
             <!-- Formulário de Edição -->
             <div class="card shadow-sm">
                 <div class="card-body p-4">
                     <form action="/perfil/editar" method="post">
-                        <!-- Nome -->
-                        <div class="mb-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario.nome }}"
-                                    required minlength="3" maxlength="100" placeholder="Nome Completo">
-                                <label for="nome">
-                                    <i class="bi bi-person"></i> Nome Completo
-                                </label>
-                            </div>
-                        </div>
+                        {{ field(name='nome', label='Nome Completo', type='text', required=true,
+                                 value=usuario.nome, attributes={'minlength': 3, 'maxlength': 100}) }}
 
-                        <!-- E-mail -->
-                        <div class="mb-3">
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}"
-                                    required placeholder="E-mail">
-                                <label for="email">
-                                    <i class="bi bi-envelope"></i> E-mail
-                                </label>
-                            </div>
-                        </div>
+                        {{ field(name='email', label='E-mail', type='email', required=true,
+                                 value=usuario.email) }}
 
-                        <!-- Informação do Perfil (Read-only) -->
-                        <div class="mb-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="perfil"
-                                    value="{{ usuario.perfil }}" disabled placeholder="Perfil de Acesso">
-                                <label for="perfil">
-                                    <i class="bi bi-person-badge"></i> Perfil de Acesso
-                                </label>
-                            </div>
-                        </div>
+                        {{ field(name='perfil', label='Perfil de Acesso', type='text',
+                                 value=usuario.perfil, disabled=true) }}
 
                         <!-- Botões -->
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-circle"></i> Salvar Alterações
                             </button>
                             <a href="/perfil/visualizar" class="btn btn-outline-secondary">

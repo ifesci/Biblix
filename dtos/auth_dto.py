@@ -31,7 +31,7 @@ class CadastroDTO(BaseModel):
     @classmethod
     def validar_perfil(cls, v: str) -> str:
         """Valida perfil - apenas Cliente ou Vendedor são permitidos no cadastro público"""
-        perfis_permitidos = [Perfil.CLIENTE.value, Perfil.VENDEDOR.value]
+        perfis_permitidos = [perfil.value for perfil in Perfil if perfil not in (Perfil.ADMIN)]
         if v not in perfis_permitidos:
             raise ValueError(f"Perfil inválido. Escolha entre: {', '.join(perfis_permitidos)}")
         return v
@@ -58,7 +58,7 @@ class RecuperacaoSenhaDTO(BaseModel):
 
     email: str
 
-    _validar_email = field_validator("email")(validar_email(tamanho_maximo=100))
+    _validar_email = field_validator("email")(validar_email())
 
 
 class RedefinirSenhaDTO(BaseModel):
@@ -72,11 +72,7 @@ class RedefinirSenhaDTO(BaseModel):
         validar_string_obrigatoria("Token", tamanho_minimo=1)
     )
     _validar_senha = field_validator("senha")(validar_senha_forte())
-    _validar_confirmar = field_validator("confirmar_senha")(
-        validar_string_obrigatoria(
-            "Confirmação de senha", tamanho_minimo=8, tamanho_maximo=128
-        )
-    )
+    _validar_confirmar = field_validator("confirmar_senha")(validar_string_obrigatoria())
 
     @model_validator(mode="after")
     def validar_senhas_coincidem(self) -> "RedefinirSenhaDTO":

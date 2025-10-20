@@ -3,7 +3,7 @@
 {% block titulo %}Meu Perfil{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <!-- Cabeçalho do Perfil -->
@@ -12,8 +12,7 @@
                     <div class="mb-4">
                         <img src="{{ usuario.id|foto_usuario }}" alt="Foto de Perfil"
                             id="profile-photo"
-                            class="rounded-circle border border-3 border-primary" width="150" height="150"
-                            style="object-fit: cover;"
+                            class="rounded-circle border border-3 border-primary object-fit-cover" width="150" height="150"
                             title="Clique para alterar a foto">
                     </div>
 
@@ -38,17 +37,17 @@
             <!-- Ações do Perfil -->
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
-                    <a href="/perfil/editar" class="btn btn-primary w-100">
+                    <a href="/perfil/editar" class="btn btn-primary w-100 btn-lg">
                         <i class="bi bi-pencil-square"></i> Editar Dados
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/perfil/alterar-senha" class="btn btn-warning w-100">
+                    <a href="/perfil/alterar-senha" class="btn btn-warning w-100 btn-lg">
                         <i class="bi bi-key-fill"></i> Alterar Senha
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-info w-100" id="btn-change-photo">
+                    <button type="button" class="btn btn-info w-100 btn-lg" id="btn-change-photo">
                         <i class="bi bi-camera-fill"></i> Alterar Foto
                     </button>
                 </div>
@@ -61,7 +60,7 @@
 <input type="file"
        id="hidden-photo-input"
        accept=".jpg,.jpeg,.png,.gif,.webp"
-       style="display: none;">
+       class="d-none">
 
 <!-- Modal de Crop de Foto -->
 {% set modal_id = "modalFotoPerfil" %}

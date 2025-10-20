@@ -1,0 +1,263 @@
+{% extends "base_publica.html" %}
+
+{% block titulo %}Exemplos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4 mb-2">Exemplos de Componentes</h1>
+            <p class="text-muted">Explore exemplos práticos de componentes e funcionalidades do sistema.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Card: Form Fields Demo -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <i class="bi bi-ui-checks fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Campos de Formulário</h5>
+                    <p class="card-text flex-grow-1">
+                        Demonstração completa das macros de campos de formulário reutilizáveis.
+                        Inclui inputs de texto, email, senha, datas, textareas, selects, checkboxes,
+                        radios, campos decimais e muito mais.
+                    </p>
+                    <div class="mb-3">
+                        <span class="badge bg-primary me-1">
+                            <i class="bi bi-puzzle"></i> Macros
+                        </span>
+                        <span class="badge bg-info text-dark me-1">
+                            <i class="bi bi-file-earmark-code"></i> Jinja2
+                        </span>
+                        <span class="badge bg-success">
+                            <i class="bi bi-bootstrap"></i> Bootstrap
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top">
+                    <a href="/examples/form-fields" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle"></i> Visitar Exemplo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Cards Grid Demo -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <i class="bi bi-grid-3x3-gap fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Grid de Cards Responsivo</h5>
+                    <p class="card-text flex-grow-1">
+                        Exemplo de grid responsivo com cards do Bootstrap 5.3.8.
+                        Demonstra cards com imagens, títulos, descrições truncadas em 3 linhas,
+                        badges de status e botões de ação no rodapé.
+                    </p>
+                    <div class="mb-3">
+                        <span class="badge bg-primary me-1">
+                            <i class="bi bi-grid"></i> Grid System
+                        </span>
+                        <span class="badge bg-info text-dark me-1">
+                            <i class="bi bi-card-heading"></i> Cards
+                        </span>
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-phone"></i> Responsive
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top">
+                    <a href="/examples/cards-grid" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle"></i> Visitar Exemplo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Table List Demo -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <i class="bi bi-table fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Tabela de Listagem</h5>
+                    <p class="card-text flex-grow-1">
+                        Exemplo completo de tabela responsiva para listagem de dados.
+                        Demonstra formatação de valores, badges de status condicionais,
+                        botões de ação agrupados e modal de confirmação de exclusão.
+                    </p>
+                    <div class="mb-3">
+                        <span class="badge bg-primary me-1">
+                            <i class="bi bi-table"></i> Table
+                        </span>
+                        <span class="badge bg-info text-dark me-1">
+                            <i class="bi bi-badge-tm"></i> Badges
+                        </span>
+                        <span class="badge bg-success">
+                            <i class="bi bi-ui-radios-grid"></i> Actions
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top">
+                    <a href="/examples/table-list" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle"></i> Visitar Exemplo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Bootswatch Themes -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <i class="bi bi-palette fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Temas Bootswatch</h5>
+                    <p class="card-text flex-grow-1">
+                        Visualize e selecione diferentes temas do Bootswatch para personalizar
+                        a aparência do sistema. Inclui temas claros e escuros, com preview
+                        de componentes e seleção interativa.
+                    </p>
+                    <div class="mb-3">
+                        <span class="badge bg-primary me-1">
+                            <i class="bi bi-brush"></i> Temas
+                        </span>
+                        <span class="badge bg-info text-dark me-1">
+                            <i class="bi bi-eye"></i> Preview
+                        </span>
+                        <span class="badge bg-success">
+                            <i class="bi bi-toggle-on"></i> Interativo
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top">
+                    <a href="/examples/bootswatch" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle"></i> Visitar Exemplo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Páginas de Detalhes -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <i class="bi bi-file-earmark-richtext fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Páginas de Detalhes</h5>
+                    <p class="card-text flex-grow-1">
+                        Exemplos completos de páginas de detalhes para diferentes tipos de entidades.
+                        Cada página demonstra layout responsivo, abas de informação, avaliações,
+                        compartilhamento social e itens relacionados.
+                    </p>
+                    <div class="mb-3">
+                        <span class="badge bg-primary me-1">
+                            <i class="bi bi-layout-split"></i> Layout
+                        </span>
+                        <span class="badge bg-info text-dark me-1">
+                            <i class="bi bi-star"></i> Avaliação
+                        </span>
+                        <span class="badge bg-success me-1">
+                            <i class="bi bi-folder"></i> Tabs
+                        </span>
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-phone"></i> Responsive
+                        </span>
+                    </div>
+                    <div class="list-group list-group-flush mb-3">
+                        <a href="/examples/product-detail" class="list-group-item list-group-item-action px-0">
+                            <i class="bi bi-cart3 text-primary me-2"></i>Produto E-commerce
+                            <span class="badge bg-success ms-2">Galeria</span>
+                        </a>
+                        <a href="/examples/service-detail" class="list-group-item list-group-item-action px-0">
+                            <i class="bi bi-briefcase text-primary me-2"></i>Serviço Profissional
+                            <span class="badge bg-success ms-2">Galeria</span>
+                        </a>
+                        <a href="/examples/profile-detail" class="list-group-item list-group-item-action px-0">
+                            <i class="bi bi-person text-primary me-2"></i>Perfil de Pessoa
+                        </a>
+                        <a href="/examples/property-detail" class="list-group-item list-group-item-action px-0">
+                            <i class="bi bi-house text-primary me-2"></i>Imóvel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informações Adicionais -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info border-start border-4 border-info">
+                <h5 class="alert-heading">
+                    <i class="bi bi-info-circle-fill"></i> Sobre os Exemplos
+                </h5>
+                <p class="mb-0">
+                    Estes exemplos demonstram componentes e padrões reutilizáveis utilizados no sistema.
+                    Você pode usar estes exemplos como referência para implementar funcionalidades similares
+                    em suas próprias páginas. Todos os exemplos utilizam Bootstrap 5.3.8 e seguem as
+                    melhores práticas de desenvolvimento web.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recursos Úteis -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-book"></i> Recursos Úteis
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4 mb-3 mb-md-0">
+                            <h6>
+                                <i class="bi bi-bootstrap-fill text-primary"></i> Bootstrap 5.3.8
+                            </h6>
+                            <p class="small text-muted mb-2">Documentação oficial do framework CSS</p>
+                            <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-box-arrow-up-right"></i> Acessar Docs
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4 mb-3 mb-md-0">
+                            <h6>
+                                <i class="bi bi-brush-fill text-primary"></i> Bootswatch
+                            </h6>
+                            <p class="small text-muted mb-2">Temas gratuitos para Bootstrap</p>
+                            <a href="https://bootswatch.com/"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-box-arrow-up-right"></i> Acessar Site
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <h6>
+                                <i class="bi bi-filetype-html text-primary"></i> Jinja2 Templates
+                            </h6>
+                            <p class="small text-muted mb-2">Motor de templates para Python</p>
+                            <a href="https://jinja.palletsprojects.com/"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-box-arrow-up-right"></i> Acessar Docs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

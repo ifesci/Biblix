@@ -2,12 +2,62 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 import os
 from pathlib import Path
+from datetime import datetime
+import time
+
+
+class DailyRotatingFileHandler(TimedRotatingFileHandler):
+    """Handler customizado que cria arquivos com data no nome desde o início"""
+
+    def __init__(self, log_dir='logs', when='midnight', interval=1, backupCount=30):
+        self.log_dir = log_dir
+        Path(log_dir).mkdir(exist_ok=True)
+
+        # Nome do arquivo com data de hoje
+        filename = self._get_filename_for_date(datetime.now())
+
+        super().__init__(
+            filename=filename,
+            when=when,
+            interval=interval,
+            backupCount=backupCount
+        )
+
+    def _get_filename_for_date(self, dt):
+        """Gera nome do arquivo no formato app.YYYY.MM.DD.log"""
+        return os.path.join(
+            self.log_dir,
+            f"app.{dt.strftime('%Y.%m.%d')}.log"
+        )
+
+    def doRollover(self):
+        """Override do rollover para criar novo arquivo com nome correto"""
+        if self.stream:
+            self.stream.close()
+            self.stream = None  # type: ignore[assignment]
+
+        # Novo arquivo com data atual (após meia-noite)
+        self.baseFilename = self._get_filename_for_date(datetime.now())
+
+        # Deletar arquivos antigos além do backupCount
+        if self.backupCount > 0:
+            for s in self.getFilesToDelete():
+                os.remove(s)
+
+        # Atualizar próximo rollover
+        currentTime = int(time.time())
+        newRolloverAt = self.computeRollover(currentTime)
+        while newRolloverAt <= currentTime:
+            newRolloverAt = newRolloverAt + self.interval
+        self.rolloverAt = newRolloverAt
+
+        # Abrir novo arquivo
+        if not self.delay:
+            self.stream = self._open()
+
 
 def configurar_logger():
     """Configura sistema de logging profissional com rotação diária"""
-    # Criar pasta de logs se não existir
-    Path("logs").mkdir(exist_ok=True)
-
     # Configurar formato
     formato = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -17,14 +67,13 @@ def configurar_logger():
     # Obter configuração de retenção de logs (padrão: 30 dias)
     retention_days = int(os.getenv('LOG_RETENTION_DAYS', '30'))
 
-    # Handler para arquivo com rotação diária
-    file_handler = TimedRotatingFileHandler(
-        'logs/app.log',
-        when='midnight',           # Rotaciona à meia-noite
-        interval=1,                # A cada 1 dia
-        backupCount=retention_days # Mantém N dias de histórico
+    # Handler customizado que cria arquivos com data desde o início
+    file_handler = DailyRotatingFileHandler(
+        log_dir='logs',
+        when='midnight',
+        interval=1,
+        backupCount=retention_days
     )
-    file_handler.suffix = '%Y-%m-%d'  # Formato do sufixo: app.log.2025-10-15
     file_handler.setFormatter(formato)
 
     # Handler para console

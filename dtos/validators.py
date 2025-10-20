@@ -148,9 +148,9 @@ def validar_texto_minimo_palavras(
 
 
 def validar_nome_pessoa(
-    tamanho_minimo: Optional[int] = None,
-    min_palavras: Optional[int] = None,
-    tamanho_maximo: int = 128,
+    tamanho_minimo: Optional[int] = 4,
+    min_palavras: Optional[int] = 2,
+    tamanho_maximo: Optional[int] = 128,
 ) -> Callable[[Any, Any], Any]:
     """
     Valida nome de pessoa com opções flexíveis.
@@ -183,7 +183,7 @@ def validar_nome_pessoa(
         if min_palavras and len(valor.split()) < min_palavras:
             raise ValueError(f"Nome deve ter no mínimo {min_palavras} palavras")
 
-        if len(valor) > tamanho_maximo:
+        if tamanho_maximo and len(valor) > tamanho_maximo:
             raise ValueError(f"Nome deve ter no máximo {tamanho_maximo} caracteres")
 
         return valor
@@ -484,7 +484,7 @@ def validar_senha_forte(
 # ===== VALIDAÇÕES DE IDENTIFICADORES =====
 
 
-def validar_id_positivo(nome_campo: str = "ID") -> Callable[[Any, Any], Any]:
+def validar_id_positivo(nome_campo: str = "Identificador") -> Callable[[Any, Any], Any]:
     """
     Valida ID como número inteiro positivo.
 
@@ -506,7 +506,7 @@ def validar_id_positivo(nome_campo: str = "ID") -> Callable[[Any, Any], Any]:
     return validator
 
 
-def validar_slug(tamanho_maximo: int = 100) -> Callable[[Any, Any], Any]:
+def validar_slug(tamanho_maximo: int = 128) -> Callable[[Any, Any], Any]:
     """
     Valida slug (URL-friendly string).
 

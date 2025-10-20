@@ -18,7 +18,7 @@ class CriarTarefaDTO(BaseModel):
         )
     )
     _validar_descricao = field_validator("descricao")(
-        validar_comprimento(tamanho_maximo=500)
+        validar_comprimento(tamanho_maximo=512)
     )
 
 

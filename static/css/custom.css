@@ -1,0 +1,93 @@
+/* Variáveis de cores */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Hover effects */
+.shadow-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Font sizes */
+.fs-hero {
+    font-size: 15rem;
+}
+
+.fs-small {
+    font-size: 0.85rem;
+}
+
+/* Resize utilities */
+.resize-none {
+    resize: none;
+}
+
+/* Object position */
+.object-top {
+    object-position: top;
+}
+
+/* Error pages */
+.error-code {
+    font-size: 10rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-heading {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.error-container {
+    padding: 60px 15px;
+}
+
+/* Theme selection cards */
+.tema-card-btn {
+    transition: all 0.3s;
+    outline: 1px solid var(--secondary-color);
+    outline-offset: -1px;
+}
+
+.tema-card-btn.tema-selected {
+    outline: 6px solid var(--primary-color);
+}
+
+/* Toast container offset */
+.toast-offset {
+    margin-bottom: 60px;
+}
+
+/* Preview image size */
+.preview-120 {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+}
+
+/* HR separator */
+.hr-separator {
+    max-width: 200px;
+}
+
+/* Text truncation utilities */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    max-height: 4.5em; /* 3 lines * 1.5 line-height */
+}

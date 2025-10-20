@@ -39,25 +39,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Quando um arquivo for selecionado
-    photoInput.addEventListener('change', function(e) {
+    photoInput.addEventListener('change', async function(e) {
         const file = e.target.files[0];
 
         if (!file) return;
 
-        // Abrir o modal primeiro
-        const modalElement = document.getElementById(modalConfig.modalId);
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-
-        // Quando o modal estiver completamente visível, carregar a imagem
-        modalElement.addEventListener('shown.bs.modal', function() {
-            loadImageFromFile(
+        try {
+            // 1. PREPARAR a imagem ANTES de abrir o modal
+            // Isso carrega a imagem e define o tamanho do container
+            await prepareImageForModal(
                 modalConfig.modalId,
                 file,
-                modalConfig.aspectRatio,
                 modalConfig.maxFileSizeMB
             );
-        }, { once: true });
+
+            // 2. AGORA abrir o modal (imagem já está carregada e container já está dimensionado)
+            const modalElement = document.getElementById(modalConfig.modalId);
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+
+            // 3. Quando o modal estiver completamente visível, INICIALIZAR o Cropper
+            modalElement.addEventListener('shown.bs.modal', function() {
+                initializeCropperInModal(
+                    modalConfig.modalId,
+                    modalConfig.aspectRatio
+                );
+            }, { once: true });
+
+        } catch (error) {
+            // Se houver erro (arquivo inválido, muito grande, etc.), exibir mensagem
+            alert(error);
+            photoInput.value = '';
+        }
     });
 
     // Resetar o input quando o modal for fechado

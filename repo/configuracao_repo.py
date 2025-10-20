@@ -50,6 +50,7 @@ def inserir_padrao() -> None:
         ("nome_sistema", "Sistema Web", "Nome do sistema"),
         ("email_contato", "contato@sistema.com", "E-mail de contato"),
         ("tema_padrao", "claro", "Tema padrão (claro/escuro)"),
+        ("theme", "original", "Tema visual da aplicação (Bootswatch)"),
     ]
 
     with get_connection() as conn:

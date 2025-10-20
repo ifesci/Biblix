@@ -1,6 +1,6 @@
 {% extends "base_privada.html" %}
 
-{% block titulo %}Gerenciar Usuários - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Gerenciar Usuários{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -34,7 +34,8 @@
                                 <td>{{ usuario.nome }}</td>
                                 <td>{{ usuario.email }}</td>
                                 <td>
-                                    <span class="badge bg-{{ 'danger' if usuario.perfil == 'Administrador' else 'info' }}">
+                                    <span
+                                        class="badge bg-{{ 'danger' if usuario.perfil == 'Administrador' else 'info' }}">
                                         {{ usuario.perfil }}
                                     </span>
                                 </td>
@@ -42,14 +43,11 @@
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group">
                                         <a href="/admin/usuarios/editar/{{ usuario.id }}"
-                                           class="btn btn-outline-primary"
-                                           title="Editar">
+                                            class="btn btn-outline-primary" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <button type="button"
-                                                class="btn btn-outline-danger"
-                                                title="Excluir"
-                                                onclick="excluirUsuario({{ usuario.id }}, '{{ usuario.nome|replace("'", "\\'") }}', '{{ usuario.email }}', '{{ usuario.perfil }}')">
+                                        <button type="button" class="btn btn-outline-danger" title="Excluir"
+                                            onclick="excluirUsuario({{ usuario.id }}, '{{ usuario.nome|replace("'", "\\'") }}', '{{ usuario.email }}', '{{ usuario.perfil }}')">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
@@ -72,15 +70,15 @@
 
 {% block scripts %}
 <script>
-/**
- * Função para excluir um usuário
- */
-function excluirUsuario(usuarioId, usuarioNome, usuarioEmail, usuarioPerfil) {
-    const perfilBadge = usuarioPerfil === 'Administrador'
-        ? '<span class="badge bg-danger">Administrador</span>'
-        : '<span class="badge bg-info">Cliente</span>';
+    /**
+     * Função para excluir um usuário
+     */
+    function excluirUsuario(usuarioId, usuarioNome, usuarioEmail, usuarioPerfil) {
+        const perfilBadge = usuarioPerfil === 'Administrador'
+            ? '<span class="badge bg-danger">Administrador</span>'
+            : '<span class="badge bg-info">Cliente</span>';
 
-    const detalhes = `
+        const detalhes = `
         <div class="card bg-light">
             <div class="card-body">
                 <table class="table table-sm table-borderless mb-0">
@@ -101,11 +99,11 @@ function excluirUsuario(usuarioId, usuarioNome, usuarioEmail, usuarioPerfil) {
         </div>
     `;
 
-    abrirModalConfirmacao({
-        url: `/admin/usuarios/excluir/${usuarioId}`,
-        mensagem: 'Tem certeza que deseja excluir este usuário?',
-        detalhes: detalhes
-    });
-}
+        abrirModalConfirmacao({
+            url: `/admin/usuarios/excluir/${usuarioId}`,
+            mensagem: 'Tem certeza que deseja excluir este usuário?',
+            detalhes: detalhes
+        });
+    }
 </script>
 {% endblock %}

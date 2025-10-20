@@ -1,9 +1,9 @@
 {% extends "base_privada.html" %}
 
-{% block titulo %}Dashboard - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container">
     <!-- Cabeçalho de Boas-Vindas -->
     <div class="row mb-4">
         <div class="col-12">
@@ -21,10 +21,10 @@
     <div class="row g-4 mb-4">
         <!-- Meu Perfil -->
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm hover-shadow">
+            <div class="card h-100 shadow-sm shadow-hover">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
+                        <i class="bi bi-person-circle text-primary display-3"></i>
                     </div>
                     <h5 class="card-title">Meu Perfil</h5>
                     <p class="card-text text-muted">
@@ -37,16 +37,53 @@
             </div>
         </div>
 
-        <!-- Minhas Tarefas -->
+        <!-- Configurações (apenas para admin) -->
+        {% if usuario.perfil == 'Administrador' %}
+        <!-- Usuários -->
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm hover-shadow">
+            <div class="card h-100 shadow-sm shadow-hover">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <i class="bi bi-list-check text-success" style="font-size: 3rem;"></i>
+                        <i class="bi bi-people text-success display-3"></i>
+                    </div>
+                    <h5 class="card-title">Usuários</h5>
+                    <p class="card-text text-muted">
+                        Gerencie os usuários cadastrados no sistema
+                    </p>
+                    <a href="/admin/usuarios/listar" class="btn btn-success">
+                        <i class="bi bi-arrow-right-circle"></i> Acessar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm shadow-hover">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-gear text-danger display-3"></i>
+                    </div>
+                    <h5 class="card-title">Configurações</h5>
+                    <p class="card-text text-muted">
+                        Gerencie as configurações globais do sistema
+                    </p>
+                    <a href="/admin/configuracoes/listar" class="btn btn-danger">
+                        <i class="bi bi-arrow-right-circle"></i> Acessar
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Minhas Tarefas -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm shadow-hover">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-people text-success display-3"></i>
                     </div>
                     <h5 class="card-title">Minhas Tarefas</h5>
                     <p class="card-text text-muted">
-                        Gerencie suas tarefas e atividades
+                        Gerencie suas tarefas pendentes e concluídas
                     </p>
                     <a href="/tarefas/listar" class="btn btn-success">
                         <i class="bi bi-arrow-right-circle"></i> Acessar
@@ -55,31 +92,12 @@
             </div>
         </div>
 
-        <!-- Configurações (apenas para admin) -->
-        {% if usuario.perfil == 'Administrador' %}
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm hover-shadow">
-                <div class="card-body text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-gear text-danger" style="font-size: 3rem;"></i>
-                    </div>
-                    <h5 class="card-title">Administração</h5>
-                    <p class="card-text text-muted">
-                        Gerencie usuários e configurações do sistema
-                    </p>
-                    <a href="/admin/usuarios/listar" class="btn btn-danger">
-                        <i class="bi bi-arrow-right-circle"></i> Acessar
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% else %}
         <!-- Ajuda/Suporte para usuários comuns -->
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm hover-shadow">
+            <div class="card h-100 shadow-sm shadow-hover">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <i class="bi bi-question-circle text-info" style="font-size: 3rem;"></i>
+                        <i class="bi bi-question-circle text-info display-3"></i>
                     </div>
                     <h5 class="card-title">Ajuda</h5>
                     <p class="card-text text-muted">

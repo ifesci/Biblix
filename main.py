@@ -30,6 +30,7 @@ from routes.admin_configuracoes_routes import router as admin_config_router
 from routes.perfil_routes import router as perfil_router
 from routes.usuario_routes import router as usuario_router
 from routes.public_routes import router as public_router
+from routes.examples_routes import router as examples_router
 
 # Seeds
 from util.seed_data import inicializar_dados
@@ -41,8 +42,8 @@ app = FastAPI(title=APP_NAME, version=VERSION)
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
 # Registrar Exception Handlers
-app.add_exception_handler(StarletteHTTPException, http_exception_handler)
-app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(StarletteHTTPException, http_exception_handler)  # type: ignore[arg-type]
+app.add_exception_handler(RequestValidationError, validation_exception_handler)  # type: ignore[arg-type]
 app.add_exception_handler(Exception, generic_exception_handler)
 logger.info("Exception handlers registrados")
 
@@ -97,6 +98,10 @@ logger.info("Router de usuário incluído")
 # Rotas públicas (deve ser por último para não sobrescrever outras rotas)
 app.include_router(public_router, tags=["Público"])
 logger.info("Router público incluído")
+
+# Rotas públicas (deve ser por último para não sobrescrever outras rotas)
+app.include_router(examples_router, tags=["Exemplos"])
+logger.info("Router de exemplos incluído")
 
 @app.get("/health")
 async def health_check():

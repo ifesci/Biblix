@@ -126,6 +126,7 @@ class TestCriarTarefa:
 
         # Buscar ID do usuário de teste
         usuario = usuario_repo.obter_por_email(usuario_teste["email"])
+        assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         assert len(tarefas) > 0
         assert tarefas[0].titulo == tarefa_teste["titulo"]
@@ -143,6 +144,7 @@ class TestConcluirTarefa:
 
         # Buscar ID do usuário e da tarefa
         usuario = usuario_repo.obter_por_email(usuario_teste["email"])
+        assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         tarefa_id = tarefas[0].id
 
@@ -156,6 +158,7 @@ class TestConcluirTarefa:
 
         # Verificar no banco que foi concluída
         tarefa = tarefa_repo.obter_por_id(tarefa_id)
+        assert tarefa is not None
         assert tarefa.concluida is True
 
     def test_concluir_tarefa_sem_autenticacao(self, client):
@@ -186,6 +189,7 @@ class TestExcluirTarefa:
 
         # Buscar ID do usuário e da tarefa
         usuario = usuario_repo.obter_por_email(usuario_teste["email"])
+        assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         tarefa_id = tarefas[0].id
 
@@ -279,6 +283,7 @@ class TestIsolamentoTarefas:
 
         # Buscar ID do usuário 1 e da tarefa
         usuario1 = usuario_repo.obter_por_email("usuario1@example.com")
+        assert usuario1 is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario1.id)
         tarefa_id = tarefas[0].id
 
@@ -299,6 +304,7 @@ class TestIsolamentoTarefas:
 
         # Verificar que tarefa não foi concluída
         tarefa = tarefa_repo.obter_por_id(tarefa_id)
+        assert tarefa is not None
         assert tarefa.concluida is False
 
     def test_usuario_nao_pode_excluir_tarefa_de_outro(self, client, criar_usuario):
@@ -323,6 +329,7 @@ class TestIsolamentoTarefas:
 
         # Buscar ID do usuário 1 e da tarefa
         usuario1 = usuario_repo.obter_por_email("usuario1@example.com")
+        assert usuario1 is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario1.id)
         tarefa_id = tarefas[0].id
 
@@ -371,6 +378,7 @@ class TestValidacoesTarefa:
         criar_tarefa(tarefa_teste["titulo"], tarefa_teste["descricao"])
 
         usuario = usuario_repo.obter_por_email(usuario_teste["email"])
+        assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         assert tarefas[0].concluida is False
 
@@ -381,5 +389,6 @@ class TestValidacoesTarefa:
         criar_tarefa(tarefa_teste["titulo"], tarefa_teste["descricao"])
 
         usuario = usuario_repo.obter_por_email(usuario_teste["email"])
+        assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         assert tarefas[0].data_criacao is not None

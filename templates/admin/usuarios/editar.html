@@ -1,53 +1,36 @@
 {% extends "base_privada.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Alterar Usuário - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Alterar Usuário{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="d-flex align-items-center mb-4">
-            <h2 class="mb-0">Alterar Usuário</h2>
+            <h2 class="mb-0"><i class="bi bi-person-gear"></i> Alterar Usuário</h2>
         </div>
 
         <div class="card shadow-sm">
             <div class="card-body">
                 <form method="POST" action="/admin/usuarios/editar/{{ usuario.id }}">
                     <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <div class="form-floating">
-                                <input type="text"
-                                       class="form-control"
-                                       id="nome"
-                                       name="nome"
-                                       value="{{ usuario.nome }}"
-                                       placeholder="Nome Completo"
-                                       required>
-                                <label for="nome">Nome Completo <span class="text-danger">*</span></label>
-                            </div>
+                        <div class="col-md-12">
+                            {{ field(name='nome', label='Nome Completo', type='text', required=true,
+                                     value=usuario.nome, wrapper_class='mb-3') }}
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input type="email"
-                                       class="form-control"
-                                       id="email"
-                                       name="email"
-                                       value="{{ usuario.email }}"
-                                       placeholder="Email"
-                                       required>
-                                <label for="email">Email <span class="text-danger">*</span></label>
-                            </div>
+                        <div class="col-md-12">
+                            {{ field(name='email', label='Email', type='email', required=true,
+                                     value=usuario.email, wrapper_class='mb-3') }}
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="perfil" name="perfil" required>
-                                    {% for perfil in perfis %}
-                                    <option value="{{ perfil }}" {{ 'selected' if usuario.perfil == perfil else '' }}>{{ perfil }}</option>
-                                    {% endfor %}
-                                </select>
-                                <label for="perfil">Perfil <span class="text-danger">*</span></label>
-                            </div>
+                        <div class="col-md-12">
+                            {% set perfis_dict = {} %}
+                            {% for perfil in perfis %}
+                                {% set _ = perfis_dict.update({perfil: perfil}) %}
+                            {% endfor %}
+                            {{ field(name='perfil', label='Perfil de Acesso', type='radio', required=true,
+                                     radio_style='buttons', options=perfis_dict, value=usuario.perfil, wrapper_class='mb-3') }}
                         </div>
 
                         <div class="col-md-12 mb-3">
@@ -57,40 +40,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input type="password"
-                                       class="form-control"
-                                       id="senha"
-                                       name="senha"
-                                       placeholder="Nova Senha">
-                                <label for="senha">Nova Senha</label>
-                            </div>
+                        <div class="col-md-6">
+                            {{ field(name='senha', label='Nova Senha', type='password',
+                                     wrapper_class='mb-3') }}
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input type="password"
-                                       class="form-control"
-                                       id="confirma_senha"
-                                       name="confirma_senha"
-                                       placeholder="Confirmar Nova Senha">
-                                <label for="confirma_senha">Confirmar Nova Senha</label>
-                            </div>
+                        <div class="col-md-6">
+                            {{ field(name='confirma_senha', label='Confirmar Nova Senha', type='password',
+                                     wrapper_class='mb-3') }}
                         </div>
 
-                        <div class="col-md-12 mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="ativo"
-                                       name="ativo"
-                                       value="1"
-                                       {{ 'checked' if usuario.ativo else '' }}>
-                                <label class="form-check-label" for="ativo">
-                                    Usuário ativo
-                                </label>
-                            </div>
+                        <div class="col-md-12">
+                            {{ field(name='ativo', label='Usuário ativo', type='checkbox', value='1',
+                                     wrapper_class='mb-3') }}
                         </div>
                     </div>
 
@@ -119,7 +81,7 @@
     });
 
     // Validação do formulário (senha opcional)
-    document.querySelector('form').addEventListener('submit', function(e) {
+    document.querySelector('form').addEventListener('submit', function (e) {
         if (!passwordValidator.validateFormOptional()) {
             e.preventDefault();
             return false;

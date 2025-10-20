@@ -1,54 +1,37 @@
 {% extends "base_privada.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Cadastrar Tarefa - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Cadastrar Tarefa{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="d-flex align-items-center mb-4">
-            <h2 class="mb-0">Cadastrar Nova Tarefa</h2>
-        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <!-- Cabeçalho -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-clipboard-plus"></i> Cadastrar Nova Tarefa</h2>
+            </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form method="POST" action="/tarefas/cadastrar">
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <div class="form-floating">
-                                <input type="text"
-                                       class="form-control"
-                                       id="titulo"
-                                       name="titulo"
-                                       value="{{ dados.titulo if dados else '' }}"
-                                       placeholder="Título"
-                                       required
-                                       maxlength="200">
-                                <label for="titulo">Título <span class="text-danger">*</span></label>
-                            </div>
+            <!-- Formulário de Cadastro -->
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post" action="/tarefas/cadastrar">
+                        {{ field(name='titulo', label='Título', type='text', required=true,
+                                 attributes={'maxlength': 200}) }}
+
+                        {{ field(name='descricao', label='Descrição', type='textarea', rows=3,
+                                 attributes={'maxlength': 1000}) }}
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Cadastrar
+                            </button>
+                            <a href="/tarefas/listar" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
                         </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="form-floating">
-                                <textarea class="form-control"
-                                          id="descricao"
-                                          name="descricao"
-                                          style="height: 100px;"
-                                          placeholder="Descrição"
-                                          maxlength="1000">{{ dados.descricao if dados else '' }}</textarea>
-                                <label for="descricao">Descrição</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-check-circle"></i> Cadastrar
-                        </button>
-                        <a href="/tarefas/listar" class="btn btn-secondary">
-                            <i class="bi bi-x-circle"></i> Cancelar
-                        </a>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

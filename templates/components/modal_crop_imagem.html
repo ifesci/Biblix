@@ -1,5 +1,5 @@
 {#
-    Componente: Modal de Crop de Imagem Reutilizável
+Componente: Modal de Crop de Imagem Reutilizável
 
     Parâmetros esperados:
     - modal_id: ID único do modal (ex: "modalFotoPerfil")
@@ -45,39 +45,33 @@
                                id="input-{{ modal_id }}"
                                accept="{{ accepted_formats }}"
                                required>
+                        <div class="form-text">
+                            Formatos: JPG, PNG, GIF, WEBP. Tamanho máximo: {{ max_file_size_mb }}MB
+                        </div>
                     </div>
                     {% endif %}
 
                     <!-- Container do Cropper -->
                     <div id="cropper-container-{{ modal_id }}" class="{% if show_upload_section %}d-none{% endif %}">
                         <!-- Área da imagem com altura calculada dinamicamente pelo JS -->
-                        <div id="cropper-image-area-{{ modal_id }}" class="mb-3" style="overflow: hidden;">
-                            <img id="cropper-image-{{ modal_id }}"
-                                 src=""
-                                 alt="Imagem para crop"
-                                 style="max-width: 100%; display: block;">
+                        <div id="cropper-image-area-{{ modal_id }}" class="mb-3 overflow-hidden">
+                            <img id="cropper-image-{{ modal_id }}" src="" alt="Imagem para crop"
+                                class="mw-100 d-block">
                         </div>
 
                         <!-- Área de controles: Preview à esquerda, Botões à direita -->
-                        <div id="cropper-controls-area-{{ modal_id }}" class="d-flex align-items-start gap-3 pt-3 border-top">
+                        <div id="cropper-controls-area-{{ modal_id }}"
+                            class="d-flex align-items-start gap-3 pt-3 border-top">
                             <!-- Preview à esquerda -->
                             <div class="flex-shrink-0 text-center">
-                                <div class="border border-2 border-primary rounded"
-                                     style="overflow: hidden; width: 120px; height: 120px;">
-                                    <img id="preview-{{ modal_id }}"
-                                         src=""
-                                         alt="Preview"
-                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="border border-2 border-dark preview-120">
+                                    <img id="preview-{{ modal_id }}" src="" alt="Preview"
+                                        class="w-100 h-100 object-fit-cover">
                                 </div>
                             </div>
 
                             <!-- Botões à direita em uma única linha -->
-                            <div class="flex-grow-1 d-flex justify-content-end align-items-start gap-2">
-                                <button type="button"
-                                        class="btn btn-secondary btn-sm"
-                                        id="btn-change-{{ modal_id }}">
-                                    <i class="bi bi-arrow-left"></i> Escolher Outra Imagem
-                                </button>
+                            <div class="flex-grow-1 d-flex justify-content-end align-items-start gap-2 mt-auto">
                                 <button type="button"
                                         class="btn btn-secondary"
                                         data-bs-dismiss="modal">
@@ -87,7 +81,7 @@
                                         class="btn btn-primary"
                                         id="btn-submit-{{ modal_id }}"
                                         disabled>
-                                    <i class="bi bi-upload"></i> Enviar Foto
+                                    <i class="bi bi-upload"></i> Salvar Foto
                                 </button>
                             </div>
                         </div>

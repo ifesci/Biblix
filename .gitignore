@@ -63,15 +63,19 @@ htmlcov/
 temp/
 tmp/
 .mypy_cache/
+docs/
 
 
 # IA Files
 CLAUDE.md
+ROTEIRO.md
+TODO.md
 AGENT.md
 codebase.md
 .claude/
 .mcp/
 .aidigestignore
+codebase*
 
 # Imagens
 static/img/usuarios/*

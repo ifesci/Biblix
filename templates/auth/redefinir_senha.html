@@ -1,66 +1,72 @@
 {% extends "base_publica.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Redefinir Senha - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Redefinir Senha{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h3 class="card-title text-center mb-4">
-                    <i class="bi bi-shield-lock"></i> Redefinir Senha
-                </h3>
+<div class="d-flex flex-column flex-fill justify-content-center">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">
+                        <i class="bi bi-shield-lock"></i> Redefinir Senha
+                    </h3>
 
-                <p class="text-muted text-center mb-4">
-                    Digite sua nova senha abaixo.
-                </p>
+                    <p class="text-muted text-center mb-4">
+                        Digite sua nova senha abaixo.
+                    </p>
 
-                <form method="POST" action="/redefinir-senha">
-                    <input type="hidden" name="token" value="{{ token }}">
+                    <form method="POST" action="/redefinir-senha">
+                        {{ field(name='token', type='hidden', value=token) }}
 
-                    <div class="mb-3">
-                        <div class="form-floating">
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="senha"
-                                name="senha"
-                                placeholder="Nova Senha"
-                                minlength="8"
-                                required
-                                autofocus
-                            >
-                            <label for="senha">Nova Senha</label>
+                        {{ field(name='senha', label='Nova Senha', type='password', required=true, autofocus=true,
+                                 attributes={'minlength': 8}) }}
+
+                        {{ field(name='confirmar_senha', label='Confirmar Nova Senha', type='password', required=true,
+                                 attributes={'minlength': 8}) }}
+
+                        <!-- Indicador de força da senha -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">Força da senha:</small>
+                                <small id="senha-strength-text" class="text-muted"></small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" id="senha-strength" role="progressbar"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-floating mb-3">
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="confirmar_senha"
-                            name="confirmar_senha"
-                            placeholder="Confirmar Nova Senha"
-                            minlength="8"
-                            required
-                        >
-                        <label for="confirmar_senha">Confirmar Nova Senha</label>
-                    </div>
+                        <div id="senha-match" class="form-text mb-3"></div>
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-shield-lock"></i> Redefinir Senha
-                        </button>
-                    </div>
-                </form>
+                        <!-- Requisitos da Senha -->
+                        <div class="mb-3">
+                            <div class="alert alert-info">
+                                <strong><i class="bi bi-info-circle"></i> Requisitos da senha:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li id="req-length">Mínimo de 8 caracteres</li>
+                                    <li id="req-uppercase">Pelo menos 1 letra maiúscula</li>
+                                    <li id="req-lowercase">Pelo menos 1 letra minúscula</li>
+                                    <li id="req-number">Pelo menos 1 número</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                <hr class="my-4">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-shield-lock"></i> Redefinir Senha
+                            </button>
+                        </div>
+                    </form>
 
-                <p class="text-center mb-0">
-                    <a href="/login" class="text-decoration-none">
-                        <i class="bi bi-arrow-left"></i> Voltar ao Login
-                    </a>
-                </p>
+                    <hr class="my-4">
+
+                    <p class="text-center mb-0">
+                        <a href="/login" class="text-decoration-none">
+                            <i class="bi bi-arrow-left"></i> Voltar ao Login
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -73,11 +79,22 @@
     const passwordValidator = new PasswordValidator({
         passwordFieldId: 'senha',
         confirmPasswordFieldId: 'confirmar_senha',
-        minLength: 8
+        strengthBarId: 'senha-strength',
+        strengthTextId: 'senha-strength-text',
+        matchMessageId: 'senha-match',
+        requirements: {
+            length: 'req-length',
+            uppercase: 'req-uppercase',
+            lowercase: 'req-lowercase',
+            number: 'req-number'
+        },
+        minLength: 8,
+        showStrength: true,
+        showRequirements: true
     });
 
     // Validação do formulário
-    document.querySelector('form').addEventListener('submit', function(e) {
+    document.querySelector('form').addEventListener('submit', function (e) {
         if (!passwordValidator.validateForm()) {
             e.preventDefault();
             return false;

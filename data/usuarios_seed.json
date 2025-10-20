@@ -3,19 +3,19 @@
     {
       "nome": "Administrador Padrão",
       "email": "admin@email.com",
-      "senha": "Admin@123",
+      "senha": "1324aA@#",
       "perfil": "Administrador"
     },
     {
       "nome": "Cliente Padrão",
       "email": "cliente@email.com",
-      "senha": "Cliente@123",
+      "senha": "1324aA@#",
       "perfil": "Cliente"
     },
     {
       "nome": "Vendedor Padrão",
       "email": "vendedor@email.com",
-      "senha": "Vendedor@123",
+      "senha": "1324aA@#",
       "perfil": "Vendedor"
     }
   ]

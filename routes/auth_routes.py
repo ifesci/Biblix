@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from pydantic import ValidationError
 from datetime import datetime
 
-from dtos.login_dto import LoginDTO, CadastroDTO, RecuperacaoSenhaDTO, RedefinirSenhaDTO
+from dtos.auth_dto import LoginDTO, CadastroDTO, RecuperacaoSenhaDTO, RedefinirSenhaDTO
 from model.usuario_model import Usuario
 from repo import usuario_repo
 from util.security import criar_hash_senha, verificar_senha, gerar_token_redefinicao, obter_data_expiracao_token
@@ -12,6 +12,14 @@ from util.flash_messages import informar_sucesso, informar_erro
 from util.template_util import criar_templates
 from util.logger_config import logger
 from util.perfis import Perfil
+from util.config import (
+    RATE_LIMIT_LOGIN_MAX,
+    RATE_LIMIT_LOGIN_MINUTOS,
+    RATE_LIMIT_CADASTRO_MAX,
+    RATE_LIMIT_CADASTRO_MINUTOS,
+    RATE_LIMIT_ESQUECI_SENHA_MAX,
+    RATE_LIMIT_ESQUECI_SENHA_MINUTOS
+)
 
 router = APIRouter()
 templates = criar_templates("templates/auth")
@@ -48,7 +56,18 @@ class SimpleRateLimiter:
         """Limpa todas as tentativas registradas (útil para testes)"""
         self.tentativas.clear()
 
-login_limiter = SimpleRateLimiter(max_tentativas=5, janela_minutos=5)
+login_limiter = SimpleRateLimiter(
+    max_tentativas=RATE_LIMIT_LOGIN_MAX,
+    janela_minutos=RATE_LIMIT_LOGIN_MINUTOS
+)
+cadastro_limiter = SimpleRateLimiter(
+    max_tentativas=RATE_LIMIT_CADASTRO_MAX,
+    janela_minutos=RATE_LIMIT_CADASTRO_MINUTOS
+)
+esqueci_senha_limiter = SimpleRateLimiter(
+    max_tentativas=RATE_LIMIT_ESQUECI_SENHA_MAX,
+    janela_minutos=RATE_LIMIT_ESQUECI_SENHA_MINUTOS
+)
 
 @router.get("/login")
 async def get_login(request: Request):
@@ -73,9 +92,12 @@ async def post_login(
             informar_erro(request, "Muitas tentativas de login. Aguarde alguns minutos.")
             logger.warning(f"Rate limit excedido para IP: {ip}")
             return RedirectResponse("/login", status_code=status.HTTP_303_SEE_OTHER)
+        
+        # Armazena os dados do formulário para reexibição em caso de erro
+        dados_formulario = {"email": email}
 
         # Validar dados com DTO
-        dto = LoginDTO(email=email, senha=senha)
+        dto = LoginDTO(email=email, senha=senha)        
 
         # Buscar usuário
         usuario = usuario_repo.obter_por_email(dto.email)
@@ -99,11 +121,11 @@ async def post_login(
         return RedirectResponse("/usuario", status_code=status.HTTP_303_SEE_OTHER)
 
     except ValidationError as e:
-        erros = [erro['msg'] for erro in e.errors()]
-        informar_erro(request, " | ".join(erros))
+        erros = { erro["loc"][-1]: erro['msg'].replace("Value error, ", "") for erro in e.errors() }
+        informar_erro(request, "Há campos com erros de validação.")
         return templates.TemplateResponse(
             "auth/login.html",
-            {"request": request, "email": email}
+            {"request": request, "dados": dados_formulario, "erros": erros}
         )
 
 @router.get("/logout")
@@ -135,6 +157,16 @@ async def post_cadastrar(
 ):
     """Processa cadastro de novo usuário"""
     try:
+        # Rate limiting por IP
+        ip = request.client.host if request.client else "unknown"
+        if not cadastro_limiter.verificar(ip):
+            informar_erro(
+                request,
+                f"Muitas tentativas de cadastro. Aguarde {RATE_LIMIT_CADASTRO_MINUTOS} minuto(s)."
+            )
+            logger.warning(f"Rate limit de cadastro excedido para IP: {ip}")
+            return RedirectResponse("/cadastrar", status_code=status.HTTP_303_SEE_OTHER)
+
         # Validar dados com DTO
         dto = CadastroDTO(
             perfil=perfil,
@@ -199,6 +231,16 @@ async def post_esqueci_senha(
 ):
     """Processa solicitação de recuperação de senha"""
     try:
+        # Rate limiting por IP
+        ip = request.client.host if request.client else "unknown"
+        if not esqueci_senha_limiter.verificar(ip):
+            informar_erro(
+                request,
+                f"Muitas tentativas de recuperação de senha. Aguarde {RATE_LIMIT_ESQUECI_SENHA_MINUTOS} minuto(s)."
+            )
+            logger.warning(f"Rate limit de recuperação de senha excedido para IP: {ip}")
+            return RedirectResponse("/esqueci-senha", status_code=status.HTTP_303_SEE_OTHER)
+
         # Validar e-mail com DTO
         dto = RecuperacaoSenhaDTO(email=email)
 

@@ -1,45 +1,36 @@
 {% extends "base_publica.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Recuperar Senha - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Recuperar Senha{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h3 class="card-title text-center mb-4">
-                    <i class="bi bi-key"></i> Recuperar Senha
-                </h3>
+<div class="d-flex flex-column flex-fill justify-content-center">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">
+                        <i class="bi bi-key"></i> Recuperar Senha
+                    </h3>
 
-                <p class="text-muted text-center mb-4">
-                    Digite seu e-mail cadastrado para receber instruções de recuperação de senha.
-                </p>
+                    <p class="text-muted text-center mb-4">
+                        Digite seu e-mail cadastrado para receber instruções de recuperação de senha.
+                    </p>
 
-                <form method="POST" action="/esqueci-senha">
-                    <div class="form-floating mb-3">
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="email"
-                            name="email"
-                            value="{{ email or '' }}"
-                            placeholder="E-mail"
-                            required
-                            autofocus
-                        >
-                        <label for="email">E-mail</label>
-                    </div>
+                    <form method="POST" action="/esqueci-senha">
+                        {{ field(name='email', label='E-mail', type='email', required=true, autofocus=true) }}
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-envelope"></i> Enviar Link de Recuperação
-                        </button>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-envelope"></i> Enviar Link de Recuperação
+                            </button>
 
-                        <a href="/login" class="btn btn-outline-secondary">
-                            <i class="bi bi-arrow-left"></i> Voltar ao Login
-                        </a>
-                    </div>
-                </form>
+                            <a href="/login" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Voltar ao Login
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

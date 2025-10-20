@@ -1,165 +1,62 @@
 {% extends "base_privada.html" %}
 
-{% block titulo %}Configurações do Sistema - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Configurações do Sistema{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <div class="mb-4">
-            <h2>Configurações do Sistema</h2>
-            <p class="text-muted">Gerencie as configurações globais da aplicação</p>
+            <h2><i class="bi bi-sliders"></i> Configurações do Sistema</h2>
         </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                {% if configuracoes %}
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th width="25%">Chave</th>
-                                <th width="50%">Valor</th>
-                                <th width="25%">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for config in configuracoes %}
-                            <tr>
-                                <td>
-                                    <strong>{{ config.chave }}</strong>
-                                    {% if config.descricao %}
-                                    <br>
-                                    <small class="text-muted">{{ config.descricao }}</small>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <form method="POST"
-                                          action="/admin/configuracoes/atualizar/{{ config.id }}"
-                                          class="form-inline-config"
-                                          data-config-id="{{ config.id }}">
-                                        {% if config.tipo == 'boolean' %}
-                                        <div class="form-floating" style="max-width: 200px;">
-                                            <select class="form-select form-select-sm"
-                                                    id="valor_{{ config.id }}"
-                                                    name="valor">
-                                                <option value="true" {{ 'selected' if config.valor == 'true' else '' }}>Sim</option>
-                                                <option value="false" {{ 'selected' if config.valor == 'false' else '' }}>Não</option>
-                                            </select>
-                                            <label for="valor_{{ config.id }}">Valor</label>
-                                        </div>
-                                        {% elif config.tipo == 'number' %}
-                                        <div class="form-floating" style="max-width: 200px;">
-                                            <input type="number"
-                                                   class="form-control form-control-sm"
-                                                   id="valor_{{ config.id }}"
-                                                   name="valor"
-                                                   value="{{ config.valor }}"
-                                                   placeholder="Valor">
-                                            <label for="valor_{{ config.id }}">Valor</label>
-                                        </div>
-                                        {% elif config.tipo == 'text' %}
-                                        <div class="form-floating" style="max-width: 400px;">
-                                            <textarea class="form-control form-control-sm"
-                                                      id="valor_{{ config.id }}"
-                                                      name="valor"
-                                                      style="height: 60px;"
-                                                      placeholder="Valor">{{ config.valor }}</textarea>
-                                            <label for="valor_{{ config.id }}">Valor</label>
-                                        </div>
-                                        {% else %}
-                                        <div class="form-floating" style="max-width: 400px;">
-                                            <input type="text"
-                                                   class="form-control form-control-sm"
-                                                   id="valor_{{ config.id }}"
-                                                   name="valor"
-                                                   value="{{ config.valor }}"
-                                                   placeholder="Valor">
-                                            <label for="valor_{{ config.id }}">Valor</label>
-                                        </div>
-                                        {% endif %}
-                                    </form>
-                                </td>
-                                <td>
-                                    <button type="button"
-                                            class="btn btn-sm btn-primary btn-salvar-config"
-                                            data-config-id="{{ config.id }}">
-                                        <i class="bi bi-check-circle"></i> Salvar
-                                    </button>
-                                    <span class="text-success d-none ms-2 feedback-salvo" data-config-id="{{ config.id }}">
-                                        <i class="bi bi-check"></i> Salvo!
-                                    </span>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <!-- Card de Acesso à Configuração de Tema -->
+        <a href="/admin/configuracoes/tema" class="text-decoration-none">
+            <div class="card shadow-sm mb-4 border-primary shadow-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary bg-opacity-10 rounded-circle py-3 px-4">
+                                <i class="bi bi-palette fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-4">
+                            <h4 class="card-title mb-2 text-primary">Personalizar Tema</h4>
+                            <p class="card-text text-muted mb-0">
+                                Escolha entre diversos temas visuais para personalizar a aparência da aplicação
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-chevron-right fs-3 text-muted"></i>
+                        </div>
+                    </div>
                 </div>
-                {% else %}
-                <div class="alert alert-info text-center mb-0">
-                    <i class="bi bi-info-circle"></i> Nenhuma configuração cadastrada.
-                </div>
-                {% endif %}
             </div>
-        </div>
+        </a>
 
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">
-                    <i class="bi bi-info-circle"></i> Informações
-                </h5>
+        <!-- Card de Acesso à Auditoria de Logs -->
+        <a href="/admin/configuracoes/auditoria" class="text-decoration-none">
+            <div class="card shadow-sm mb-4 border-primary shadow-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary bg-opacity-10 rounded-circle py-3 px-4">
+                                <i class="bi bi-journal-text fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-4">
+                            <h4 class="card-title mb-2 text-primary">Auditoria de Logs</h4>
+                            <p class="card-text text-muted mb-0">
+                                Visualize e filtre logs do sistema por data e nível de severidade
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-chevron-right fs-3 text-muted"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <ul class="mb-0">
-                    <li>As alterações são salvas individualmente ao clicar no botão "Salvar"</li>
-                    <li>Configurações do tipo booleano aceitam apenas "Sim" ou "Não"</li>
-                    <li>Algumas configurações podem requerer reinicialização da aplicação</li>
-                </ul>
-            </div>
-        </div>
+        </a>
+
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    // Salvar configuração via AJAX ou submit do form
-    document.querySelectorAll('.btn-salvar-config').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const configId = this.getAttribute('data-config-id');
-            const form = document.querySelector(`form[data-config-id="${configId}"]`);
-            const feedback = document.querySelector(`.feedback-salvo[data-config-id="${configId}"]`);
-
-            // Submit do formulário
-            form.submit();
-
-            // Mostrar feedback visual (se não redirecionar)
-            this.classList.add('d-none');
-            feedback.classList.remove('d-none');
-
-            setTimeout(() => {
-                this.classList.remove('d-none');
-                feedback.classList.add('d-none');
-            }, 2000);
-        });
-    });
-
-    // Permitir salvar com Enter em campos de texto
-    document.querySelectorAll('.form-inline-config input, .form-inline-config textarea').forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                const configId = this.closest('form').getAttribute('data-config-id');
-                document.querySelector(`.btn-salvar-config[data-config-id="${configId}"]`).click();
-            }
-        });
-    });
-
-    // Auto-salvar em select (opcional)
-    document.querySelectorAll('.form-inline-config select').forEach(select => {
-        select.addEventListener('change', function() {
-            const configId = this.closest('form').getAttribute('data-config-id');
-            document.querySelector(`.btn-salvar-config[data-config-id="${configId}"]`).click();
-        });
-    });
-</script>
 {% endblock %}

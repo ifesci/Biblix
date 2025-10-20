@@ -1,84 +1,54 @@
 {% extends "base_privada.html" %}
+{% from "macros/form_fields.html" import field %}
 
 {% block titulo %}Alterar Senha{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <!-- Cabeçalho -->
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="bi bi-key-fill"></i> Alterar Senha</h2>
-                <a href="/perfil/visualizar" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-left"></i> Voltar
-                </a>
+                <h2><i class="bi bi-key-fill"></i> Alterar Senha</h2>                
             </div>
 
             <!-- Formulário de Alteração de Senha -->
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <form action="/perfil/alterar-senha" method="post" id="formSenha">
-                        <!-- Senha Atual -->
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="senha_atual" name="senha_atual" required
-                                        placeholder="Senha Atual">
-                                    <label for="senha_atual">
-                                        <i class="bi bi-lock"></i> Senha Atual
-                                    </label>
-                                </div>
-                                <button class="btn btn-outline-secondary" type="button"
-                                    onclick="togglePassword('senha_atual')">
-                                    <i class="bi bi-eye" id="icon_senha_atual"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <form action="/perfil/alterar-senha" method="post" id="formSenha" autocomplete="off">
+                        {{ field(name='senha_atual', label='Senha Atual', type='password', required=true,
+                                 append_icon='bi-eye', append_button_onclick="togglePassword('senha_atual')",
+                                 attributes={'autocomplete': 'current-password'}) }}
 
-                        <hr class="my-4">
-
-                        <!-- Senha Nova -->
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="senha_nova" name="senha_nova" required
-                                        minlength="8" placeholder="Nova Senha">
-                                    <label for="senha_nova">
-                                        <i class="bi bi-key"></i> Nova Senha
-                                    </label>
-                                </div>
-                                <button class="btn btn-outline-secondary" type="button"
-                                    onclick="togglePassword('senha_nova')">
-                                    <i class="bi bi-eye" id="icon_senha_nova"></i>
-                                </button>
+                        <!-- Nova Senha e Confirmar Senha lado a lado -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ field(name='senha_nova', label='Nova Senha', type='password', required=true,
+                                         append_icon='bi-eye', append_button_onclick="togglePassword('senha_nova')",
+                                         attributes={'minlength': 8, 'autocomplete': 'new-password'},
+                                         wrapper_class='mb-0') }}
                             </div>
+
+                            <div class="col-md-6">
+                                {{ field(name='confirmar_senha', label='Confirmar Nova Senha', type='password', required=true,
+                                         append_icon='bi-eye', append_button_onclick="togglePassword('confirmar_senha')",
+                                         attributes={'minlength': 8, 'autocomplete': 'new-password'},
+                                         wrapper_class='mb-0') }}
+                                <div id="senha-match" class="form-text mt-2"></div>
+                            </div>
+
                             <!-- Indicador de força da senha -->
-                            <div class="mt-2">
-                                <small class="text-muted">Força da senha:</small>
-                                <div class="progress" style="height: 5px;">
-                                    <div class="progress-bar" id="senha-strength" role="progressbar" style="width: 0%">
+                            <div class="col-12 mb-3">
+                                <div class="">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <small class="text-muted">Força da senha:</small>
+                                        <small id="senha-strength-text" class="text-muted"></small>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" id="senha-strength" role="progressbar"></div>
                                     </div>
                                 </div>
-                                <small id="senha-strength-text" class="text-muted"></small>
                             </div>
-                        </div>
-
-                        <!-- Confirmar Senha -->
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha"
-                                        required minlength="8" placeholder="Confirmar Nova Senha">
-                                    <label for="confirmar_senha">
-                                        <i class="bi bi-check-circle"></i> Confirmar Nova Senha
-                                    </label>
-                                </div>
-                                <button class="btn btn-outline-secondary" type="button"
-                                    onclick="togglePassword('confirmar_senha')">
-                                    <i class="bi bi-eye" id="icon_confirmar_senha"></i>
-                                </button>
-                            </div>
-                            <div id="senha-match" class="form-text"></div>
                         </div>
                         <!-- Requisitos da Senha -->
                         <div class="row">
@@ -100,7 +70,7 @@
                                     <strong>Dica de Segurança:</strong>
                                     <ul class="mb-0 mt-2">
                                         <li>Use uma senha forte e única</li>
-                                        <li>Não compartilhe sua senha com ninguém</li>
+                                        <li>Não compartilhe sua senha</li>
                                         <li>Altere sua senha periodicamente</li>
                                         <li>Não reutilize senhas antigas</li>
                                     </ul>
@@ -108,8 +78,8 @@
                             </div>
                         </div>
                         <!-- Botões -->
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-warning btn-lg">
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-key-fill"></i> Alterar Senha
                             </button>
                             <a href="/perfil/visualizar" class="btn btn-outline-secondary">

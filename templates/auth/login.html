@@ -1,6 +1,7 @@
 {% extends "base_publica.html" %}
+{% from "macros/form_fields.html" import field %}
 
-{% block titulo %}Login - {{ APP_NAME }}{% endblock %}
+{% block titulo %}Login{% endblock %}
 
 {% block content %}
 <div class="d-flex flex-column flex-fill justify-content-center">
@@ -13,17 +14,8 @@
                     </h3>
 
                     <form method="POST" action="/login">
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ email or '' }}"
-                                placeholder="E-mail" required autofocus>
-                            <label for="email">E-mail</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="senha" name="senha"
-                                placeholder="Senha" required>
-                            <label for="senha">Senha</label>
-                        </div>
+                        {{ field(name='email', label='E-mail', type='email', required=true, autofocus=true) }}
+                        {{ field(name='senha', label='Senha', type='password', required=true) }}
 
                         <div class="mb-3">
                             <a href="/esqueci-senha" class="text-decoration-none small">

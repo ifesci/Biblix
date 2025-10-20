@@ -1,0 +1,94 @@
+{% extends "base_privada.html" %}
+
+{% block titulo %}Personalizar Tema{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-palette"></i> Personalizar Tema</h2>
+            <a href="/admin/configuracoes/listar" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+        </div>
+
+        <div class="alert alert-info mb-4">
+            <i class="bi bi-info-circle"></i>
+            Escolha um dos temas visuais abaixo para personalizar a aparência da aplicação.
+            Após selecionar, <strong>recarregue a página</strong> para visualizar as mudanças.
+        </div>
+
+        {% if temas %}
+        <div class="row g-4">
+            {% for tema in temas %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <form method="POST" action="/admin/configuracoes/tema/aplicar" class="h-100">
+                    <input type="hidden" name="tema" value="{{ tema.nome }}">
+                    <button type="submit" class="btn
+                                   p-0 w-100 h-100 position-relative tema-card tema-card-btn
+                                   {{ 'tema-selected' if tema.selecionado else '' }}">
+
+                        <!-- Badge "Selecionado" -->
+                        {% if tema.selecionado %}
+                        <span
+                            class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary py-2 px-3 small z-3">
+                            <i class="bi bi-check-circle-fill"></i> Selecionado
+                        </span>
+                        {% endif %}
+
+                        <div class="card h-100 border-0 overflow-hidden">
+                            <!-- Imagem de Preview do Tema -->
+                            <div class="card-img-top overflow-hidden">
+                                <img src="{{ tema.imagem }}" alt="Preview do tema {{ tema.nome_exibicao }}"
+                                    class="w-100 h-100 object-fit-cover object-top">
+                            </div>
+                        </div>
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center">
+            <i class="bi bi-exclamation-triangle"></i>
+            Nenhum tema disponível. Verifique se os arquivos de tema estão instalados corretamente.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Efeito hover nos cards de tema
+    document.querySelectorAll('.tema-card').forEach(card => {
+        card.addEventListener('mouseenter', function () {
+            if (!this.classList.contains('tema-selected')) {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            }
+        });
+
+        card.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    });
+
+    // Confirmação antes de aplicar tema (opcional)
+    document.querySelectorAll('.tema-card').forEach(card => {
+        card.addEventListener('click', function (e) {
+            const temaNome = this.querySelector('input[name="tema"]').value;
+            const isSelecionado = this.classList.contains('tema-selected');
+
+            if (isSelecionado) {
+                e.preventDefault();
+                alert('Este tema já está selecionado!');
+                return false;
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}
