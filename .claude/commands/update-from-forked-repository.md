@@ -2,6 +2,31 @@
 
 Atualiza este repositório fork com as últimas mudanças do repositório original upstream, corrigindo automaticamente problemas comuns nos testes.
 
+## ⚠️ GARANTIA DE SEGURANÇA
+
+**Este comando NUNCA modifica o repositório original (upstream):**
+
+✅ **Operações de LEITURA no upstream:**
+- `git fetch upstream` - apenas baixa atualizações
+- `git log upstream/main` - apenas consulta commits
+- `git merge upstream/main` - usa dados já baixados localmente
+
+✅ **Operações de ESCRITA (apenas no fork local):**
+- `git commit` - salva mudanças LOCALMENTE
+- `git branch` - cria branches LOCAIS
+- `git push origin main` - envia para SEU FORK (não para upstream)
+
+🔒 **Garantias:**
+- Nenhum comando faz `git push upstream` (isso nem é possível sem permissões especiais)
+- O repositório original permanece intocado
+- Apenas seu fork local e remoto são modificados
+
+**Remotes:**
+- `origin` = seu fork (repositório do aluno)
+- `upstream` = repositório original (DefaultWebApp)
+
+---
+
 ## Instruções para Execução
 
 Execute as seguintes fases de forma autônoma e sequencial:
@@ -363,6 +388,8 @@ Ao concluir todas as fases, apresentar relatório completo:
 - Abortar se houver mudanças não commitadas
 - Abortar se houver conflitos (correção manual)
 - Nunca forçar push
+- NUNCA modifica o repositório upstream (apenas leitura)
+- APENAS escreve no fork local (origin), nunca no upstream
 
 **Inteligência:**
 - Detectar tipo de projeto automaticamente
