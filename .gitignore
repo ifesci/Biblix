@@ -72,7 +72,7 @@ ROTEIRO.md
 TODO.md
 AGENT.md
 codebase.md
-.claude/
+.claude/settings.local.json
 .mcp/
 .aidigestignore
 codebase*
