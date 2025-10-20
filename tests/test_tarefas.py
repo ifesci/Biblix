@@ -129,7 +129,9 @@ class TestCriarTarefa:
         assert usuario is not None
         tarefas = tarefa_repo.obter_todos_por_usuario(usuario.id)
         assert len(tarefas) > 0
-        assert tarefas[0].titulo == tarefa_teste["titulo"]
+        # Verificar se a tarefa criada está na lista
+        titulos = [t.titulo for t in tarefas]
+        assert tarefa_teste["titulo"] in titulos
 
 
 class TestConcluirTarefa:

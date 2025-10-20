@@ -38,13 +38,44 @@ def setup_test_database():
 def limpar_rate_limiter():
     """Limpa o rate limiter antes de cada teste para evitar bloqueios"""
     # Importar após configuração do banco de dados
-    from routes.auth_routes import login_limiter
+    from routes.auth_routes import login_limiter, cadastro_limiter, esqueci_senha_limiter
 
     # Limpar antes do teste
     login_limiter.limpar()
+    cadastro_limiter.limpar()
+    esqueci_senha_limiter.limpar()
     yield
     # Limpar depois do teste também
     login_limiter.limpar()
+    cadastro_limiter.limpar()
+    esqueci_senha_limiter.limpar()
+
+
+@pytest.fixture(scope="function", autouse=True)
+def limpar_banco_dados():
+    """Limpa o banco de dados antes de cada teste"""
+    # Importar após configuração do banco de dados
+    from util.db_util import get_connection
+    import sqlite3
+
+    # Limpar antes do teste
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        # Tentar limpar cada tabela, ignorando se não existir
+        try:
+            cursor.execute("DELETE FROM tarefa")
+        except sqlite3.OperationalError:
+            pass
+        try:
+            cursor.execute("DELETE FROM usuario")
+        except sqlite3.OperationalError:
+            pass
+        try:
+            cursor.execute("DELETE FROM configuracao")
+        except sqlite3.OperationalError:
+            pass
+
+    yield
 
 
 @pytest.fixture(scope="function")
@@ -89,9 +120,10 @@ def criar_usuario(client):
     Fixture que retorna uma função para criar usuários
     Útil para criar múltiplos usuários em um teste
     """
-    def _criar_usuario(nome: str, email: str, senha: str):
+    def _criar_usuario(nome: str, email: str, senha: str, perfil: str = Perfil.CLIENTE.value):
         """Cadastra um usuário via endpoint de cadastro"""
         response = client.post("/cadastrar", data={
+            "perfil": perfil,
             "nome": nome,
             "email": email,
             "senha": senha,
